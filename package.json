@@ -1,0 +1,14 @@
+{
+  "name": "auth2207",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/vanpho93/auth2207.git",
+  "author": "Van Pho Nguyen <vanpho02@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^8.0.1",
+    "pg": "^7.3.0"
+  }
+}
