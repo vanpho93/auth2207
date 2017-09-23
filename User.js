@@ -1,5 +1,6 @@
 const queryDb = require('./db');
 const { hash, compare } = require('bcrypt');
+const { sign, verify } = require('./token');
 
 class User {
     static async signIn(email, password) {
@@ -10,7 +11,8 @@ class User {
         const same = await compare(password, user.password);
         if (!same) throw new Error('Password khong dung');
         const { phone, name } = user;
-        return { email, name, phone };
+        const token = await sign({ email, name, phone });
+        return { email, name, phone, token };
     }
 
     static async signUp(email, password, name, phone) {
