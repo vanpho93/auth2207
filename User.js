@@ -19,3 +19,5 @@ class User {
         return queryDb(sql, [email, hashPassword, name, phone])
     }
 }
+
+module.exports = User;
