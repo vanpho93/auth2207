@@ -20,7 +20,18 @@ function verify(token) {
     });
 }
 
-module.exports = { sign, verify };
+function renewToken(object) {
+    return new Promise((resolve, reject) => {
+        delete object.exp;
+        delete object.iat;
+        jwt.sign(object, SECRET_KEY, { expiresIn: '1d' }, (err, token) => {
+            if (err) return reject(err);
+            resolve(token);
+        });
+    });
+}
+
+module.exports = { sign, verify, renewToken };
 
 // sign({ email: 'aaa', name: 'bbb', phone: 'ccc' }, SECRET_KEY, { expiresIn: 10 }, (err, token) => {
 //     console.log(token);

@@ -1,6 +1,6 @@
 const queryDb = require('./db');
 const { hash, compare } = require('bcrypt');
-const { sign, verify } = require('./token');
+const { sign, verify, renewToken } = require('./token');
 
 class User {
     static async signIn(email, password) {
@@ -19,6 +19,12 @@ class User {
         const sql = 'INSERT INTO "User"(email, password, name, phone) VALUES($1, $2, $3, $4)';
         const hashPassword = await hash(password, 8);
         return queryDb(sql, [email, hashPassword, name, phone])
+    }
+
+    static async checkToken(token) {
+        const object = await verify(token);
+        const newToken = await renewToken(object);
+        return newToken;
     }
 }
 

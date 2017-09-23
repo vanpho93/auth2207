@@ -1,6 +1,7 @@
 const express = require('express');
 const parser = require('body-parser').json();
 const User = require('./User');
+const { verify } = require('./token');
 
 const app = express();
 
@@ -21,6 +22,23 @@ app.post('/signup', parser, (req, res) => {
     .catch(error => {
         res.send({ error: 'Email has existed.' });
     })
+});
+
+app.post('/check', parser, (req, res) => {
+    const { token } = req.body;
+    User.checkToken(token)
+    .then(newToken => res.send({ token: newToken }))
+    .catch(error => res.send({ error: 'Token is expired.' }));
+});
+
+app.post('/status', parser, (req, res) => {
+    const { content, token } = req.body;
+    verify(token)
+    .then(userInfo => {
+        const { email } = userInfo;
+        res.send('Add ' + content + ' for ' + email);
+    })
+    .catch(err => res.send(err.message));
 });
 
 app.listen(3000, () => console.log('Server started'));
