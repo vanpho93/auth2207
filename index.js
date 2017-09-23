@@ -43,4 +43,7 @@ app.post('/status', parser, (req, res) => {
 
 app.listen(3000, () => console.log('Server started'));
 
-// email
+// email: khoaphamtraining@gmail.com -> 
+// github
+// video ung dung
+// server node -> gui code
